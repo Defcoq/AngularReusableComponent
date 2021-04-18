@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "angular-cdkdemo",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "angular-cdkdemo": {
+      "projectType": "application",
+      "root": "apps/angular-cdkdemo",
+      "sourceRoot": "apps/angular-cdkdemo/src",
+      "prefix": "jpdeffoscript",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/angular-cdkdemo",
+            "index": "apps/angular-cdkdemo/src/index.html",
+            "main": "apps/angular-cdkdemo/src/main.ts",
+            "polyfills": "apps/angular-cdkdemo/src/polyfills.ts",
+            "tsConfig": "apps/angular-cdkdemo/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/angular-cdkdemo/src/favicon.ico",
+              "apps/angular-cdkdemo/src/assets"
+            ],
+            "styles": [
+              "apps/angular-cdkdemo/src/styles.scss",
+              "./node_modules/bulma/css/bulma.min.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/angular-cdkdemo/src/environments/environment.ts",
+                  "with": "apps/angular-cdkdemo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "angular-cdkdemo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "angular-cdkdemo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "angular-cdkdemo:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/angular-cdkdemo/src/**/*.ts",
+              "apps/angular-cdkdemo/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/angular-cdkdemo"],
+          "options": {
+            "jestConfig": "apps/angular-cdkdemo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "angular-cdkdemo-e2e": {
+      "root": "apps/angular-cdkdemo-e2e",
+      "sourceRoot": "apps/angular-cdkdemo-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/angular-cdkdemo-e2e/cypress.json",
+            "tsConfig": "apps/angular-cdkdemo-e2e/tsconfig.e2e.json",
+            "devServerTarget": "angular-cdkdemo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-cdkdemo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/angular-cdkdemo-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "bulma": {
+      "projectType": "library",
+      "root": "libs/bulma",
+      "sourceRoot": "libs/bulma/src",
+      "prefix": "ba",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/bulma/tsconfig.lib.json",
+            "project": "libs/bulma/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/bulma/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/bulma/src/**/*.ts",
+              "libs/bulma/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/bulma"],
+          "options": {
+            "jestConfig": "libs/bulma/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "bulma-elements": {
+      "projectType": "application",
+      "root": "apps/bulma-elements",
+      "sourceRoot": "apps/bulma-elements/src",
+      "prefix": "ba",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/bulma-elements",
+            "index": "apps/bulma-elements/src/index.html",
+            "main": "apps/bulma-elements/src/main.ts",
+            "polyfills": "apps/bulma-elements/src/polyfills.ts",
+            "tsConfig": "apps/bulma-elements/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/bulma-elements/src/favicon.ico",
+              "apps/bulma-elements/src/assets"
+            ],
+            "styles": ["apps/bulma-elements/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/bulma-elements/src/environments/environment.ts",
+                  "with": "apps/bulma-elements/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "bulma-elements:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "bulma-elements:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "bulma-elements:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/bulma-elements/src/**/*.ts",
+              "apps/bulma-elements/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/bulma-elements"],
+          "options": {
+            "jestConfig": "apps/bulma-elements/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "bulma-elements-e2e": {
+      "root": "apps/bulma-elements-e2e",
+      "sourceRoot": "apps/bulma-elements-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/bulma-elements-e2e/cypress.json",
+            "tsConfig": "apps/bulma-elements-e2e/tsconfig.e2e.json",
+            "devServerTarget": "bulma-elements:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "bulma-elements:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/bulma-elements-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}

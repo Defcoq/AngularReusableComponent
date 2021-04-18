@@ -1,0 +1,27 @@
+{
+  "implicitDependencies": {
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    ".eslintrc.json": "*"
+  },
+  "affected": { "defaultBase": "master" },
+  "npmScope": "jpdeffoscript",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+    }
+  },
+  "projects": {
+    "angular-cdkdemo": { "tags": [] },
+    "angular-cdkdemo-e2e": {
+      "tags": [],
+      "implicitDependencies": ["angular-cdkdemo"]
+    },
+    "bulma": { "tags": [] },
+    "bulma-elements": { "tags": [] },
+    "bulma-elements-e2e": {
+      "tags": [],
+      "implicitDependencies": ["bulma-elements"]
+    }
+  }
+}

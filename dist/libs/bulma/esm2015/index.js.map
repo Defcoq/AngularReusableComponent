@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../libs/bulma/src/index.ts"],"names":[],"mappings":"AAAA,cAAc,oBAAoB,CAAC","sourcesContent":["export * from './lib/bulma.module';\n"]}
